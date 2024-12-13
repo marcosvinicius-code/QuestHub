@@ -1,0 +1,9 @@
+# Ignorar a pasta node_modules
+node_modules/
+
+# Ignorar arquivos de configuração do nodemon
+*.nodemon.json
+
+.env/
+dist/
+build/
