@@ -1,9 +1,24 @@
 <%- include('partials/header') %>
-  <body>
-    <%- include('partials/navbar') %>
+<body>
+  <%- include('partials/navbar') %>
 
-    <h1>Estilo do Bootstrap</h1>
+  <div class="container">
+    <hr>
+    <h1>Perguntas</h1>
+    <hr>
+    <a href="/question" class="btn btn-success">Perguntar</a>
+    <hr>
+    <% questions.forEach(question => { %> 
+    <br>
+    <div class="card">
+      <div class="card-body">
+        <h3><%= question.titulo %></h3> 
+      <div class="card-footer">
+        <button class="btn btn-success">Responder</button>
+      </div>
+    </div>
 
-  </body>
-  <%- include('partials/footer') %>
-  
+    <% }) %> 
+  </div>
+</body>
+<%- include('partials/footer') %>
