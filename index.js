@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/db.js");
-const questionModel = require("./database/Question.js");
+const Question = require("./database/Question.js");
 
 // Database Sequelize
 connection
@@ -24,7 +24,12 @@ app.use(bodyParser.json());
 
 //Rotas
 app.get("/", (req, res) => {
-  res.render("index");
+  Question.findAll({ raw: true }).then((questions) => {
+    console.log(questions);
+    res.render("index", {
+      questions: questions,
+    });
+  });
 });
 
 app.get("/question", (req, res) => {
@@ -34,9 +39,12 @@ app.get("/question", (req, res) => {
 app.post("/savequestion", (req, res) => {
   let titulo = req.body.titulo;
   let descricao = req.body.descricao;
-  res.send(
-    "Formulário recebido! titulo " + titulo + " " + " descricao " + descricao
-  );
+  Question.create({
+    titulo: titulo,
+    descricao: descricao,
+  }).then(() => {
+    res.redirect("/");
+  });
 });
 
 app.listen(8000, () => {
