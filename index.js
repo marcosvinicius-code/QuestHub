@@ -10,8 +10,8 @@ connection
   .then(() => {
     console.log("Conexão feita com banco de dados!");
   })
-  .catch(() => {
-    console.log(msgErro);
+  .catch((error) => {
+    console.log("Erro ao conectar ao banco de dados:", error.message);
   });
 
 // Config EJS
@@ -22,9 +22,9 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//Rotas
+// Rotas
 app.get("/", (req, res) => {
-  Question.findAll({ raw: true }).then((questions) => {
+  Question.findAll({ raw: true, order: [["id", "DESC"]] }).then((questions) => {
     console.log(questions);
     res.render("index", {
       questions: questions,
@@ -45,6 +45,24 @@ app.post("/savequestion", (req, res) => {
   }).then(() => {
     res.redirect("/");
   });
+});
+
+app.get("/pergunta/:id", (req, res) => {
+  let id = req.params.id;
+  Question.findOne({
+    where: { id: id },
+  })
+    .then((question) => {
+      if (question != undefined) {
+        res.render("pergunta", { question: question });
+      } else {
+        res.redirect("/");
+      }
+    })
+    .catch((error) => {
+      console.log("Erro ao buscar pergunta:", error.message);
+      res.redirect("/");
+    });
 });
 
 app.listen(8000, () => {
