@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+<body>
+  <%- include('partials/navbar') %>
+
+  <div class="container">
+    <hr />
+    <h1><%= question.titulo %></h1>
+    <p><%= question.descricao %></p>
+    <hr />
+
+    <form method="POST" action="/response">
+      <h3>Responda</h3>
+      <label>Resposta:</label>
+      <textarea
+        placeholder="Digite sua resposta"
+        class="form-control"
+        name="body"
+        required
+      ></textarea>
+
+      <input type="hidden" name="question" value="<%= question.id %>" />
+
+      <button type="submit" class="btn btn-success mt-2">Responder</button>
+    </form>
+  </div>
+</body>
+<%- include('partials/footer') %>
