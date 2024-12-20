@@ -4,14 +4,13 @@ const connection = require("./db");
 const Response = connection.define("answers", {
   body: {
     type: Sequelize.TEXT,
-    allowNull: false,
+    allowNull: false,  
   },
-  questionid: {
+  questionId: {
     type: Sequelize.INTEGER,
-    AllowNull: false,
+    allowNull: false,  
   },
 });
 
-Response.sync({ force: false });
-
+Response.sync({ force: false }); 
 module.exports = Response;
