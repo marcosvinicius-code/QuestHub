@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./database/db.js");
 const Question = require("./database/Question.js");
+const Response = require("./database/Response.js");
 
 // Database Sequelize
 connection
@@ -64,6 +65,29 @@ app.get("/pergunta/:id", (req, res) => {
       res.redirect("/");
     });
 });
+
+app.post("/response", (req, res) => {
+  let body = req.body.body;
+  let questionId = req.body.question;
+
+  if (!body || body.trim() === "") {
+    console.log("Resposta vazia");
+    return res.redirect("/pergunta/" + questionId); 
+  }
+
+  Response.create({
+    body: body,
+    questionId: questionId,
+  }).then(() => {
+    res.redirect("/pergunta/" + questionId);
+  }).catch((error) => {
+    console.log("Erro ao salvar resposta:", error);
+    res.redirect("/pergunta/" + questionId); 
+  });
+});
+
+
+
 
 app.listen(8000, () => {
   console.log("App rodando!");
