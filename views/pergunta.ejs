@@ -22,6 +22,16 @@
 
       <button type="submit" class="btn btn-success mt-2">Responder</button>
     </form>
+    <hr />
+    <h3>Respostas</h3>
+    <hr />
+    <% answers.forEach(answers => {%>
+    <div class="card">
+      <div class="card-body">
+        <p><%= answers.body %></p>
+      </div>
+    </div>
+    <% }) %>
   </div>
 </body>
 <%- include('partials/footer') %>
